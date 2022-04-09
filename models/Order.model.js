@@ -30,6 +30,6 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-const Orde = model("Order", orderSchema);
+const Order = model("Order", orderSchema);
 
 module.exports = Order;

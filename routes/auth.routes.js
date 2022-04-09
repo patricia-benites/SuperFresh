@@ -35,8 +35,9 @@ router.post("/login", async (req, res) => {
           algorithm: "HS256",
           expiresIn: "6h",
         });
+        const { password, ...details } = user._doc;
         res.status(200).json({
-          user,
+          ...details,
           token,
         });
       } else {
