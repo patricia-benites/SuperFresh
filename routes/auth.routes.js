@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
+const { authenticate } = require("../middlewares/jwt.middleware");
 
 const router = express.Router();
 
@@ -46,6 +47,21 @@ router.post("/login", async (req, res) => {
     } else {
       res.status(401).json({ message: "Email or password are incorrect" });
     }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.put("/:id", authenticate, async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json(error);
   }
