@@ -29,16 +29,16 @@ router.post("/", authenticate, async (req, res) => {
     }
   });
   
-//   //  Delete cart
+  //  Delete order -> Admin only
   
-//   router.delete("/:id", authenticate, async (req, res) => {
-//     try {
-//       await Cart.findByIdAndDelete(req.params.id);
-//       res.status(200).json("Cart has been deleted");
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   });
+  router.delete("/:id", authenticate, async (req, res) => {
+    try {
+      await Order.findByIdAndDelete(req.params.id);
+      res.status(200).json("Order has been deleted");
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
   
 //   // / Get cart
   
