@@ -40,16 +40,16 @@ router.post("/", authenticate, async (req, res) => {
     }
   });
   
-//   // / Get cart
+  // / Get cart
   
-//   router.get("/find/:userId", authenticate, async (req, res) => {
-//     try {
-//       const cart = await Cart.findOne({ userId: req.params.userId });
-//       res.status(200).json(cart);
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   });
+  router.get("/find/:userId", authenticate, async (req, res) => {
+    try {
+      const orders = await Order.find({ userId: req.params.userId });
+      res.status(200).json(orders);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
   
 //   // Get all carts -> Admin only
 //   router.get("/find", authenticate, async (req, res) => {
