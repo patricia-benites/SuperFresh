@@ -42,7 +42,7 @@ router.delete("/:id", authenticate, async (req, res) => {
 
 // / Get cart
 
-router.get("/find/:userId", async (req, res) => {
+router.get("/find/:userId", authenticate, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
@@ -51,8 +51,8 @@ router.get("/find/:userId", async (req, res) => {
   }
 });
 
-// Get all products ->
-router.get("/find", async (req, res) => {
+// Get all carts -> Admin only
+router.get("/find", authenticate, async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);
