@@ -15,19 +15,19 @@ router.post("/", authenticate, async (req, res) => {
     }
   });
   
-//   //  Update user cart
-//   router.put("/:id", authenticate, async (req, res) => {
-//     try {
-//       const updatedCart = await Cart.findByIdAndUpdate(
-//         req.params.id,
-//         { $set: req.body },
-//         { new: true }
-//       );
-//       res.status(200).json(updatedCart);
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   });
+  //  Update user order -? Admin only
+  router.put("/:id", authenticate, async (req, res) => {
+    try {
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      res.status(200).json(updatedOrder);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
   
 //   //  Delete cart
   
