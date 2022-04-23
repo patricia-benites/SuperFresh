@@ -16,7 +16,7 @@ router.post("/", authenticate, async (req, res) => {
 });
 
 //  Update user cart
-router.put("/:id", authenticate, async (req, res) => {
+router.patch("/:id", authenticate, async (req, res) => {
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
