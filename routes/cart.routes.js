@@ -44,7 +44,7 @@ router.delete("/:id", authenticate, async (req, res) => {
 
 router.get("/find/:userId", authenticate, async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId });
+    const cart = await Cart.findOne({ userId: req.params.userId }).populate('products.productId');
     res.status(200).json(cart);
   } catch (error) {
     res.status(500).json(error);
