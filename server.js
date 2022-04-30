@@ -21,4 +21,4 @@ app.use("/products", productRoutes);
 const cartRoutes = require("./routes/cart.routes");
 app.use("/carts", cartRoutes);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 4000);
