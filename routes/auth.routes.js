@@ -22,35 +22,38 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user) {
-      const passwordCorrect = await bcrypt.compare(password, user.password);
-      if (passwordCorrect) {
-        const payload = {
-          user,
-        };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
-          algorithm: "HS256",
-          expiresIn: "6h",
-        });
-        const { password, ...details } = user._doc;
-        res.status(200).json({
-          ...details,
-          token,
-        });
+router.post(
+  "/login",
+  validate([body("email").isEmail(), body("password").isLength({ min: 6 })]),
+  async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (user) {
+        const passwordCorrect = await bcrypt.compare(password, user.password);
+        if (passwordCorrect) {
+          const payload = {
+            user,
+          };
+          const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            algorithm: "HS256",
+            expiresIn: "6h",
+          });
+          res.status(200).json({
+            user,
+            token,
+          });
+        } else {
+          res.status(401).json({ message: "Email or password are incorrect" });
+        }
       } else {
         res.status(401).json({ message: "Email or password are incorrect" });
       }
-    } else {
-      res.status(401).json({ message: "Email or password are incorrect" });
+    } catch (error) {
+      res.status(500).json(error);
     }
-  } catch (error) {
-    res.status(500).json(error);
   }
-});
+);
 
 router.put("/:id", authenticate, async (req, res) => {
   try {
