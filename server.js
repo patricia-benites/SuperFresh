@@ -21,4 +21,7 @@ app.use("/products", productRoutes);
 const cartRoutes = require("./routes/cart.routes");
 app.use("/carts", cartRoutes);
 
+const stripeRoutes = require("./routes/stripe");
+app.use("/stripe", stripeRoutes);
+
 app.listen(process.env.PORT || 4000);
